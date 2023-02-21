@@ -1,0 +1,33 @@
+name: Deploy
+
+on: [push]
+
+jobs:
+  build-nginx:
+    runs-on: self-hosted
+    steps:
+      - name: clone
+        ...
+      - name: build
+        run: cd apps/nginx && sudo docker build -t georgecernica/nginx-test:latest .
+      - name: push
+        run: sudo docker push georgecernica/nginx-test:latest
+  build-wordpress:
+    runs-on: self-hosted
+    steps:
+      - name: build
+        run: cd apps/wordpress && sudo docker build -t georgecernica/wordpress-test:latest .
+      - name: push
+        run: sudo docker push georgecernica/wordpress-test:latest
+  build-mysql:
+    runs-on: self-hosted
+    steps:
+      - name: build
+        run: cd apps/mysql && sudo docker build -t georgecernica/mysql-test:latest .
+      - name: push
+        run: sudo docker push georgecernica/mysql-test:latest    
+  docker-compose:
+    runs-on: self-hosted
+    steps:
+      - name: docker-compose
+        run: sudo docker-compose up -d         
