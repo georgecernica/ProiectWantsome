@@ -3,31 +3,22 @@ name: Deploy
 on: [push]
 
 jobs:
-  build-nginx:
+  apps:
     runs-on: self-hosted
     steps:
-      - name: clone
-        run: git clone https://github.com/georgecernica/ProiectWantsome.git
-      - name: build
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: build nginx
         run: cd apps/nginx && sudo docker build -t georgecernica/nginx-test:latest .
-      - name: push
+      - name: push nginx
         run: sudo docker push georgecernica/nginx-test:latest
-  build-wordpress:
-    runs-on: self-hosted
-    steps:
-      - name: build
+      - name: build wordpress
         run: cd apps/wordpress && sudo docker build -t georgecernica/wordpress-test:latest .
-      - name: push
+      - name: push wordpress
         run: sudo docker push georgecernica/wordpress-test:latest
-  build-mysql:
-    runs-on: self-hosted
-    steps:
-      - name: build
+      - name: build mysql
         run: cd apps/mysql && sudo docker build -t georgecernica/mysql-test:latest .
-      - name: push
+      - name: push mysql
         run: sudo docker push georgecernica/mysql-test:latest    
-  docker-compose:
-    runs-on: self-hosted
-    steps:
       - name: docker-compose
         run: sudo docker-compose up -d         
