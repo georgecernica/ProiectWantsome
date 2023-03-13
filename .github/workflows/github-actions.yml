@@ -16,7 +16,7 @@ jobs:
       - name: build nginx
         run: cd apps/nginx && sudo docker build -t georgecernica/nginx-test:latest .
       - name: push nginx
-        run: sudo docker push georgecernica/nginx-test:latest
+        run: sudo docker login -u georgecernica && sudo docker push georgecernica/nginx-test:latest
       - name: build wordpress
         run: cd apps/wordpress && sudo docker build -t georgecernica/wordpress-test:latest .
       - name: push wordpress
