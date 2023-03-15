@@ -19,8 +19,9 @@ Vagrant.configure("2") do |config|
     sudo apt-get install -y docker-ce
     sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     sudo chmod +x /usr/local/bin/docker-compose
-    sudo usermod -aG docker $USER
-    sudo chown $USER /var/run/docker.sock
+    sudo usermod -aG docker vagrant
+    sudo chown vagrant /var/run/docker.sock
+    sudo chown vagrant:docker /var/run/docker.sock && sudo chmod g+rwx /var/run/docker.sock
 
   
   SHELL
